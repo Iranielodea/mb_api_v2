@@ -20,20 +20,21 @@ class ContaBancoServico
     public function salvar(Request $request)
     {    
         $lista = $request->all();
+        
         try
         {
-            foreach($lista as $item)
+            foreach($lista as &$item)
             {
                 $model = new ContaBanco($item['id'], $item['codigo'], $item['numConta'], $item['agencia'], 
                     $item['nomeBanco'], $item['ativo'], $item['cnpjCpf']);
-                    
+
                 $resultado = $this->repositorio->salvar($model);
             }
             return response()->json($resultado, Response::HTTP_OK);
         }
         catch(Exception $ex)
         {
-            $retorno = array("retorno" => "ERRO", "mensagem" => $ex->getMessage());
+            $retorno = array("mensagem" => "ERRO: ".$ex->getMessage());
             return response()->json($retorno, Response::HTTP_BAD_REQUEST);
         }
     }

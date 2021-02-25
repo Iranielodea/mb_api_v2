@@ -11,6 +11,6 @@ interface ContaBancoRepositorioInterface
     public function filtrar(string $campo, string $valor);
     public function obterPorCodigo(int $codigo);
     public function obterPorId(int $id);
-    public function salvar(ContaBanco $contaBanco);
+    public function Salvar(ContaBanco $contaBanco);
     public function excluir(int $id);
 }

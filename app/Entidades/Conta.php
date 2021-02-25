@@ -46,7 +46,7 @@ class Conta
         $this->setDocumento($documento);
         $this->setNomeFormaPagto($nomeFormaPagto);
         $this->setContaBancoId($contaBancoId);
-        $this->setPedidoI($pedidoId);
+        $this->setPedidoId($pedidoId);
     }
 
     public function getId()
@@ -234,7 +234,7 @@ class Conta
         return $this->pedidoId;
     }
 
-    public function setPedidoI($value)
+    public function setPedidoId($value)
     {
         $this->pedidoId = $value;
     }
