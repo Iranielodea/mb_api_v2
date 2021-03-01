@@ -4,6 +4,7 @@ namespace App\Servicos;
 
 use App\Entidades\ContaBanco;
 use App\interfaces\ContaBancoRepositorioInterface;
+use App\Shared\Funcoes;
 use Exception;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +20,7 @@ class ContaBancoServico
 
     public function salvar(Request $request)
     {    
+        $retorno = "";
         $lista = $request->all();
         
         try
@@ -34,7 +36,7 @@ class ContaBancoServico
         }
         catch(Exception $ex)
         {
-            $retorno = array("mensagem" => "ERRO: ".$ex->getMessage());
+            $retorno = Funcoes::retornarErro().$ex->getMessage();
             return response()->json($retorno, Response::HTTP_BAD_REQUEST);
         }
     }

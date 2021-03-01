@@ -4,6 +4,7 @@ namespace App\Servicos;
 
 use App\Entidades\Carga;
 use App\interfaces\CargaRepositorioInterface;
+use App\Shared\Funcoes;
 use Exception;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +20,7 @@ class CargaServico
     }
 
     public function salvar(Request $request)
-    {    
+    {   $retorno = "";
         $lista = $request->all();
         try
         {
@@ -42,7 +43,7 @@ class CargaServico
         }
         catch(Exception $ex)
         {
-            $retorno = array("retorno" => "ERRO", "mensagem" => $ex->getMessage());
+            $retorno = Funcoes::retornarErro(). $ex->getMessage();
             return response()->json($retorno, Response::HTTP_BAD_REQUEST);
         }
     }

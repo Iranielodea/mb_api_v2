@@ -5,6 +5,8 @@ namespace App\repositorios;
 use App\Entidades\Conta;
 use App\interfaces\ContaRepositorioInterface;
 use App\Models\ContaModel;
+use App\Shared\Funcoes;
+use Illuminate\Support\Facades\DB;
 
 class ContaRepositorioEloq implements ContaRepositorioInterface
 {
@@ -33,12 +35,11 @@ class ContaRepositorioEloq implements ContaRepositorioInterface
     public function salvar(Conta $conta)
     {
         $codigo = $conta->getCodigo();
-        if ($codigo > 0)
-            $model = $this->obterPorCodigo($codigo);
+        $model = $this->obterPorCodigo($codigo);
 
         if ($model == null)
-            $model = $this->model;
-
+            $model = new ContaModel();
+        
         $model->codigo = $conta->getCodigo();
         $model->num_pedido = $conta->getNumPedido();
         $model->nome_cliente = $conta->getNomeCliente();
@@ -57,14 +58,39 @@ class ContaRepositorioEloq implements ContaRepositorioInterface
         $model->nome_forma_pagto = $conta->getNomeFormaPagto();
         $model->banco_id = $conta->getContaBancoId();
         $model->pedido_id = $conta->getPedidoId();
-
-        return $model->save();
+        
+        $model->save();
+        return Funcoes::retornarOk();
     }
+
+    // private function incluir(Conta $conta)
+    // {
+    //     DB::table('conta')->insert([
+    //         'codigo' => $conta->getCodigo(),
+    //         'num_pedido' => $conta->getNumPedido(),
+    //         'nome_cliente' => $conta->getNomeCliente(),
+    //         'nome_fornecedor' => $conta->getNomeFornecedor(),
+    //         'data_emissao' => $conta->getDataEmissao(),
+    //         'valor_pagar' => $conta->getValorPagar(),
+    //         'data_vencto' => $conta->getDataVencto(),
+    //         'dias' => $conta->getDias(),
+    //         'data_pago' => $conta->getDataPago(),
+    //         'valor_pago' => $conta->getValorPago(),
+    //         'seq_conta' => $conta->getSeqConta(),
+    //         'valor_original' => $conta->getValorOriginal(),
+    //         'tipo_conta' => $conta->getTipoConta(),
+    //         'situacao' => $conta->getSituacao(),
+    //         'documento' => $conta->getDocumento(),
+    //         'nome_forma_pagto' => $conta->getNomeFormaPagto(),
+    //         'banco_id' => $conta->getContaBancoId(),
+    //         'pedido_id' => $conta->getPedidoId()
+    //     ]);
+    // }
     
     public function excluir(int $id)
     {
         $result = $this->model->find($id)
             ->delete();
-        return $result ? true : false;
+        return $result ? Funcoes::retornarOk() : Funcoes::retornarErro();
     }
 }

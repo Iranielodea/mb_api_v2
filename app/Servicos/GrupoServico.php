@@ -4,6 +4,7 @@ namespace App\Servicos;
 
 use App\Entidades\Grupo;
 use App\interfaces\GrupoRepositorioInterface;
+use App\Shared\Funcoes;
 use Exception;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +20,7 @@ class GrupoServico
 
     public function salvar(Request $request)
     {
+        $retorno = "";
         $lista = $request->all();
         try
         {
@@ -28,14 +30,14 @@ class GrupoServico
                     throw new Exception("Informe o Nome");
 
                 $model = new Grupo($item['id'], $item['codigo'], $item['nome'], $item['ativo']);
-                $this->repositorio->salvar($model);
+                $retorno = $this->repositorio->salvar($model);
             }
 
-            // return response()->json($resultado, Response::HTTP_OK);
+            return response()->json($retorno, Response::HTTP_OK);
         }
         catch(Exception $ex)
         {
-            $retorno = array("retorno" => "ERRO", "mensagem" => $ex->getMessage());
+            $retorno = Funcoes::retornarErro(). $ex->getMessage();
             return response()->json($retorno, Response::HTTP_BAD_REQUEST);
         }
     }

@@ -5,6 +5,8 @@ namespace App\Repositorios;
 use App\Entidades\Transportadora;
 use App\Interfaces\TransportadoraRepositorioInterface;
 use App\Models\TransportadoraModel;
+use App\Shared\Funcoes;
+use Illuminate\Support\Facades\DB;
 
 class TransportadoraRepositorioEloq implements TransportadoraRepositorioInterface
 {
@@ -33,11 +35,10 @@ class TransportadoraRepositorioEloq implements TransportadoraRepositorioInterfac
     public function salvar(Transportadora $transportadora)
     {
         $codigo = $transportadora->getCodigo();
-        if ($codigo > 0)
-            $model = $this->model->where('codigo', '=', $codigo)->first();
-        
-            if ($model == null)
-            $model = $this->model;
+        $model = $this->model->where('codigo', '=', $codigo)->first();
+
+        if ($model == null)
+            $model = new TransportadoraModel();
 
         $model->codigo = $transportadora->getCodigo();
         $model->nome = $transportadora->getNome();
@@ -61,14 +62,43 @@ class TransportadoraRepositorioEloq implements TransportadoraRepositorioInterfac
         $model->nome_agencia = $transportadora->getNumAgencia();
         $model->num_conta = $transportadora->getNumConta();
         $model->titular = $transportadora->getTitular();
-
-        return $model->save();
+        
+        $model->save();
+        return Funcoes::retornarOk();
     }
+
+    // private function incluir(Transportadora $transportadora)
+    // {
+    //     DB::table('transportadora')->insert([
+    //         'codigo' => $transportadora->getCodigo(),
+    //         'nome' => $transportadora->getNome(),
+    //         'bairro' => $transportadora->getBairro(),
+    //         'cep' => $transportadora->getCep(),
+    //         'cnpj' => $transportadora->getCnpj(),
+    //         'email' => $transportadora->getEmail(),
+    //         'endereco' => $transportadora->getEndereco(),
+    //         'fax' => $transportadora->getFax(),
+    //         'insc_Estadual' => $transportadora->getInscricaoEstadual(),
+    //         'nome_Cidade' => $transportadora->getNomeCidade(),
+    //         'obs' => $transportadora->getObs(),
+    //         'uf' => $transportadora->getUf(),
+    //         'cpf_transp' => $transportadora->getCpfTrans(),
+    //         'fone1' => $transportadora->getFone1(),
+    //         'fone2' => $transportadora->getFone2(),
+    //         'ddd' => $transportadora->getDDD(),
+    //         'contato' => $transportadora->getContato(),
+    //         'num_banco' => $transportadora->getNumBanco(),
+    //         'nome_banco' => $transportadora->getNomeBanco(),
+    //         'nome_agencia' => $transportadora->getNumAgencia(),
+    //         'num_conta' => $transportadora->getNumConta(),
+    //         'titular' => $transportadora->getTitular()
+    //     ]);
+    // }
     
     public function excluir(int $id)
     {
         $result = $this->model->find($id)
             ->delete();
-        return $result ? true : false;
+        return $result ? Funcoes::retornarOk() : Funcoes::retornarErro();
     }
 }

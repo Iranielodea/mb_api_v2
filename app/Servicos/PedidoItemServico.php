@@ -4,6 +4,7 @@ namespace App\Servicos;
 
 use App\Entidades\PedidoItem;
 use App\interfaces\PedidoItemRepositorioInterface;
+use App\Shared\Funcoes;
 use Exception;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +20,7 @@ class PedidoItemServico
 
     public function salvar(Request $request)
     {    
+        $retorno = "";
         try
         {
             $lista = $request->all();
@@ -37,7 +39,7 @@ class PedidoItemServico
         }
         catch(Exception $ex)
         {
-            $retorno = array("retorno" => "ERRO", "mensagem" => $ex->getMessage());
+            $retorno = Funcoes::retornarErro(). $ex->getMessage();
             return response()->json($retorno, Response::HTTP_BAD_REQUEST);
         }
     }

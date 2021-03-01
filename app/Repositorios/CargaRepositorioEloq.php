@@ -5,6 +5,8 @@ namespace App\repositorios;
 use App\Entidades\Carga;
 use App\interfaces\CargaRepositorioInterface;
 use App\Models\CargaModel;
+use App\Shared\Funcoes;
+use Illuminate\Support\Facades\DB;
 
 class CargaRepositorioEloq implements CargaRepositorioInterface
 {
@@ -29,12 +31,11 @@ class CargaRepositorioEloq implements CargaRepositorioInterface
     public function salvar(Carga $carga)
     {
         $codigo = $carga->getCodigo();
-        if ($codigo > 0)
-            $model = $this->model->where('codigo', '=', $codigo)->first();
+        $model = $this->model->where('codigo', '=', $codigo)->first();
 
         if ($model == null)
-            $model = $this->model;
-        
+            $model = new CargaModel();
+
         $model->codigo = $carga->getCodigo();
         $model->nome_cliente = $carga->getNomeCliente();
         $model->nome_contato = $carga->getNomeContato();
@@ -74,14 +75,60 @@ class CargaRepositorioEloq implements CargaRepositorioInterface
         $model->valor_nota2 = $carga->getValorNota2();
         $model->nome_usina = $carga->getNomeUsina();
         $model->nome_agencia = $carga->getNomeAgencia();
-
-        return $model->save();
-
+        
+        $model->save();
+        return Funcoes::retornarOk();
     }
+
+    // private function incluir(Carga $carga)
+    // {
+    //     DB::table('carga')->insert([
+    //         'codigo' => $carga->getCodigo(),
+    //         'nome_cliente' => $carga->getNomeCliente(),
+    //         'nome_contato' => $carga->getNomeContato(),
+    //         'num_pedido' => $carga->getNumPedido(),
+    //         'num_carga' => $carga->getNumCarga(),
+    //         'letra' => $carga->getLetra(),
+    //         'data' => $carga->getData(),
+    //         'visto' => $carga->getVisto(),
+    //         'qtde' => $carga->getQtde(),
+    //         'valor_pedido' => $carga->getValorPedido(),
+    //         'valor_carrega' => $carga->getValorCarrega(),
+    //         'valor_frete' => $carga->getValorFrete(),
+    //         'nome_fornecedor' => $carga->getNomeFornecedor(),
+    //         'nome_motorista' => $carga->getNomeMotorista(),
+    //         'qtde_pedido' => $carga->getQtdePedido(),
+    //         'placa' => $carga->getPlaca(),
+    //         'obs' => $carga->getObs(),
+    //         'obs2' => $carga->getObs2(),
+    //         'situacao' => $carga->getSituacao(),
+    //         'financeiro' => $carga->getFinanceiro(),
+    //         'complemento' => $carga->getComplemento(),
+    //         'contato_indicacao' => $carga->getContatoIndicacao(),
+    //         'saldo' => $carga->getSaldo(),
+    //         'armazen' => $carga->getArmazen(),
+    //         'unidade' => $carga->getUnidade(),
+    //         'compl_unidade' => $carga->getComplUnidade(),
+    //         'num_nf' => $carga->getNumNf(),
+    //         'data_nf' => $carga->getDataNf(),
+    //         'nome_manifesto' => $carga->getNomeManifesto(),
+    //         'qtde_cada' => $carga->getQtdeCada(),
+    //         'sigla_unidade' => $carga->getSiglaUnidade(),
+    //         'agencia_banco' => $carga->getAgenciaBanco(),
+    //         'cnpj_cpf' => $carga->getCnpjCpf(),
+    //         'credito_nf' => $carga->getCreditoNf(),
+    //         'num_nota2' => $carga->getNumNota2(),
+    //         'ir' => $carga->getIr(),
+    //         'valor_nota2' => $carga->getValorNota2(),
+    //         'nome_usina' => $carga->getNomeUsina(),
+    //         'nome_agencia' => $carga->getNomeAgencia()
+    //     ]);
+    // }
+
     public function excluir(int $id)
     {
         $result = $this->model->find($id)
             ->delete();
-        return $result ? true : false;
+        return $result ? Funcoes::retornarOk() : Funcoes::retornarErro();
     }
 }

@@ -5,6 +5,8 @@ namespace App\repositorios;
 use App\Entidades\Grupo;
 use App\interfaces\GrupoRepositorioInterface;
 use App\Models\GrupoModel;
+use App\Shared\Funcoes;
+use Illuminate\Support\Facades\DB;
 
 class GrupoRepositorioEloq implements GrupoRepositorioInterface
 {
@@ -33,24 +35,24 @@ class GrupoRepositorioEloq implements GrupoRepositorioInterface
     public function salvar(Grupo $grupo)
     {
         $codigo = $grupo->getCodigo();
-        if ($codigo > 0)
-            $model = $this->obterPorCodigo($codigo);
+        $model = $this->obterPorCodigo($codigo);
 
         if ($model == null)
-            $model = $this->model;
+            $model = new GrupoModel();
 
         $model->id = $grupo->getId();
         $model->codigo = $grupo->getCodigo();
         $model->nome = $grupo->getNome();
         $model->ativo = $grupo->getAtivo();
 
-        return $model->save();
+        $model->save();
+        return Funcoes::retornarOk();
     }
     
     public function excluir(int $id)
     {
         $result = $this->model->find($id)
             ->delete();
-        return $result ? true : false;
+        return $result ? Funcoes::retornarOk() : Funcoes::retornarErro();
     }
 }

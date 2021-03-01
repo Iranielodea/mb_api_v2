@@ -4,6 +4,7 @@ namespace App\Servicos;
 
 use App\Entidades\Cliente;
 use App\interfaces\ClienteRepositorioInterface;
+use App\Shared\Funcoes;
 use Exception;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +20,7 @@ class ClienteServico
 
     public function salvar(Request $request)
     {    
+        $retorno = "";
         $lista = $request->all();
         try
         {
@@ -39,7 +41,7 @@ class ClienteServico
         }
         catch(Exception $ex)
         {
-            $retorno = array("retorno" => "ERRO", "mensagem" => $ex->getMessage());
+            $retorno = Funcoes::retornarErro(). $ex->getMessage();
             return response()->json($retorno, Response::HTTP_BAD_REQUEST);
         }
     }

@@ -5,6 +5,8 @@ namespace App\Repositorios;
 use App\Entidades\PedidoItem;
 use App\interfaces\PedidoItemRepositorioInterface;
 use App\Models\PedidoItemModel;
+use App\Shared\Funcoes;
+use Illuminate\Support\Facades\DB;
 
 class PedidoItemRepositorioEloq implements PedidoItemRepositorioInterface
 {
@@ -38,11 +40,10 @@ class PedidoItemRepositorioEloq implements PedidoItemRepositorioInterface
         $codProduto = $pedidoItem->getCodProduto();
         $seq = $pedidoItem->getSeq();
         
-        if ($numPedido > 0)
-            $model = $this->model->obterPorItem($numPedido, $codProduto, $seq);
+        $model = $this->model->obterPorItem($numPedido, $codProduto, $seq);
 
         if ($model == null)
-            $model = $this->model;
+            $model = new PedidoItemModel();
 
         $model->num_pedido = $pedidoItem->getNumPedido();
         $model->cod_produto = $pedidoItem->getCodProduto();
@@ -57,13 +58,32 @@ class PedidoItemRepositorioEloq implements PedidoItemRepositorioInterface
         $model->total_lucro = $pedidoItem->getTotalLucro();
         $model->total_venda = $pedidoItem->getTotalVenda();
         
-        return $model->save();
+        $model->save();
+        return Funcoes::retornarOk();
     }
+
+    // private function incluir(PedidoItem $pedidoItem)
+    // {
+    //     DB::table('pedido_item')->insert([
+    //         'num_pedido' => $pedidoItem->getNumPedido(),
+    //         'cod_produto' => $pedidoItem->getCodProduto(),
+    //         'nome_produto' => $pedidoItem->getNomeProduto(),
+    //         'seq' => $pedidoItem->getSeq(),
+    //         'qtde' => $pedidoItem->getQtde(),
+    //         'valor' => $pedidoItem->getValor(),
+    //         'valor_total' => $pedidoItem->getValorTotal(),
+    //         'sigla_un' => $pedidoItem->getSiglaUn(),
+    //         'preco_venda' => $pedidoItem->getPrecoVenda(),
+    //         'valor_lucro' => $pedidoItem->getValorLucro(),
+    //         'total_lucro' => $pedidoItem->getTotalLucro(),
+    //         'total_venda' => $pedidoItem->getTotalVenda()
+    //     ]);
+    // }
     
     public function excluir(int $id)
     {
         $result = $this->model->find($id)
             ->delete();
-        return $result ? true : false;
+        return $result ? Funcoes::retornarOk() : Funcoes::retornarErro();
     }
 }

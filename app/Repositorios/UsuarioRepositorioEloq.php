@@ -5,6 +5,8 @@ namespace App\repositorios;
 use App\Entidades\Usuario;
 use App\interfaces\UsuarioRepositorioInterface;
 use App\Models\UsuarioModel;
+use App\Shared\Funcoes;
+use Illuminate\Support\Facades\DB;
 
 class UsuarioRepositorioEloq implements UsuarioRepositorioInterface
 {
@@ -32,25 +34,31 @@ class UsuarioRepositorioEloq implements UsuarioRepositorioInterface
 
     public function salvar(Usuario $usuario)
     {
-        $userName = $usuario->getUserName();
-
-        if (!empty($userName))
-            $model = $this->obterPorUserName($userName);
-
+        $model = $this->obterPorUserName($usuario->getUserName());
         if ($model == null)
-            $model = $this->model;            
+            $model = new UsuarioModel();
 
         $model->codigo = $usuario->getCodigo();
         $model->username = $usuario->getUserName();
         $model->senha = $usuario->getSenha();
-
-        return $model->save();
+        
+        $model->save();
+        return Funcoes::RetornarOk();
     }
+
+    // private function incluir(Usuario $usuario)
+    // {
+    //     DB::table('usuario')->insert([
+    //         'codigo' => $usuario->getCodigo(),
+    //         'user_name' => $usuario->getUserName(),
+    //         'senha' => $usuario->getSenha()
+    //     ]);
+    // }
     
-    public function excluir(int $id): bool
+    public function excluir(int $id)
     {
         $result = $this->model->find($id)
             ->delete();
-        return $result ? true : false;
+        return $result ? Funcoes::RetornarOk() : Funcoes::retornarErro();
     }
 }

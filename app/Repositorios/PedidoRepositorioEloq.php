@@ -5,6 +5,8 @@ namespace App\Repositorios;
 use App\Entidades\Pedido;
 use App\interfaces\PedidoRepositorioInterface;
 use App\Models\PedidoModel;
+use App\Shared\Funcoes;
+use Illuminate\Support\Facades\DB;
 
 class PedidoRepositorioEloq implements PedidoRepositorioInterface
 {
@@ -33,11 +35,10 @@ class PedidoRepositorioEloq implements PedidoRepositorioInterface
     public function salvar(Pedido $pedido)
     {
         $numPedido = $pedido->getNumPedido();
-        if ($numPedido > 0)
-            $model = $this->model->where('num_pedido', '=', $numPedido)->first();
+        $model = $this->model->where('num_pedido', '=', $numPedido)->first();
 
         if ($model == null)
-            $model = $this->model;
+            $model = new PedidoModel();
 
         $model->num_pedido = $pedido->getNumPedido();
         $model->nome_cliente = $pedido->getNomeCliente();
@@ -62,15 +63,42 @@ class PedidoRepositorioEloq implements PedidoRepositorioInterface
         $model->total_comissao = $pedido->getTotalComissao();
         $model->nome_usina = $pedido->getNomeUsina();
         
-        
-
-        return $model->save();
+        $model->save();
+        return Funcoes::retornarOk();
     }
+
+    // private function incluir(Pedido $pedido)
+    // {
+    //     DB::table('pedido')->insert([
+    //         'num_pedido' => $pedido->getNumPedido(),
+    //         'nome_cliente' => $pedido->getNomeCliente(),
+    //         'data' => $pedido->getData(),
+    //         'total_bruto' => $pedido->getTotalBruto(),
+    //         'perc_desconto' => $pedido->getPercDesconto(),
+    //         'valor_desconto' => $pedido->getValorDesconto(),
+    //         'total_liquido' => $pedido->getTotalLiquido(),
+    //         'situacao' => $pedido->getSituacao(),
+    //         'nome_fornecedor' => $pedido->getNomeFornecedor(),
+    //         'obs' => $pedido->getObs(),
+    //         'nome_contato' => $pedido->getNomeContato(),
+    //         'perc_comissao' => $pedido->getPercComissao(),
+    //         'encerrado' => $pedido->getEncerrado(),
+    //         'total_venda' => $pedido->getTotalVenda(),
+    //         'total_lucro' => $pedido->getTotalLucro(),
+    //         'total_qtde' => $pedido->getTotalQtde(),
+    //         'num_carga' => $pedido->getNumCarga(),
+    //         'valor_lucro' => $pedido->getValorLucro(),
+    //         'nome_vendedor' => $pedido->getNomeVendedor(),
+    //         'valor_comissao' => $pedido->getValorComissao(),
+    //         'total_comissao' => $pedido->getTotalComissao(),
+    //         'nome_usina' => $pedido->getNomeUsina()
+    //     ]);
+    // }
     
     public function excluir(int $id)
     {
         $result = $this->model->find($id)
             ->delete();
-        return $result ? true : false;
+        return $result ? Funcoes::retornarOk() : Funcoes::retornarErro();
     }
 }

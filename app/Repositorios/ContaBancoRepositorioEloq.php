@@ -5,6 +5,7 @@ namespace App\repositorios;
 use App\Entidades\ContaBanco;
 use App\interfaces\ContaBancoRepositorioInterface;
 use App\Models\ContaBancoModel;
+use App\Shared\Funcoes;
 use Illuminate\Support\Facades\DB;
 
 class ContaBancoRepositorioEloq implements ContaBancoRepositorioInterface
@@ -34,57 +35,38 @@ class ContaBancoRepositorioEloq implements ContaBancoRepositorioInterface
     public function Salvar(ContaBanco $contaBanco)
     {
         $codigo = $contaBanco->getCodigo();
-
-        if ($codigo == 0)
-            return $this->incluir($contaBanco);
-
         $model = $this->model->where('codigo', '=', $codigo)->first();
-        if ($model != null)
-        {
-            $model->codigo = $contaBanco->getCodigo();
-            $model->num_conta = $contaBanco->getNumConta();
-            $model->agencia = $contaBanco->getAgencia();
-            $model->nome_banco = $contaBanco->getNomeBanco();
-            $model->ativo = $contaBanco->getAtivo();
-            $model->cnpj_cpf = $contaBanco->getCnpjCpf();
-            
-            $model->save();
-            return $this->retornarOk();
-        }
-        else
-        {
-            return $this->incluir($contaBanco);
-        }
+
+        if ($model == null)
+            $model = new ContaBancoModel();
+
+        $model->codigo = $contaBanco->getCodigo();
+        $model->num_conta = $contaBanco->getNumConta();
+        $model->agencia = $contaBanco->getAgencia();
+        $model->nome_banco = $contaBanco->getNomeBanco();
+        $model->ativo = $contaBanco->getAtivo();
+        $model->cnpj_cpf = $contaBanco->getCnpjCpf();
+        
+        $model->save();
+        return Funcoes::retornarOk();
     }
 
-    private function incluir(ContaBanco $contaBanco)
-    {
-        DB::table('conta_banco')->insert([
-            'codigo' => $contaBanco->getCodigo(),
-            'num_conta' => $contaBanco->getNumConta(),
-            'agencia' => $contaBanco->getAgencia(),
-            'nome_banco' => $contaBanco->getNomeBanco(),
-            'ativo' => $contaBanco->getAtivo(),
-            'cnpj_cpf' => $contaBanco->getCnpjCpf()
-        ]);
-
-        return $this->retornarOk();
-    }
+    // private function incluir(ContaBanco $contaBanco)
+    // {
+    //     DB::table('conta_banco')->insert([
+    //         'codigo' => $contaBanco->getCodigo(),
+    //         'num_conta' => $contaBanco->getNumConta(),
+    //         'agencia' => $contaBanco->getAgencia(),
+    //         'nome_banco' => $contaBanco->getNomeBanco(),
+    //         'ativo' => $contaBanco->getAtivo(),
+    //         'cnpj_cpf' => $contaBanco->getCnpjCpf()
+    //     ]);
+    // }
 
     public function excluir(int $id)
     {
         $result = $this->model->find($id)
             ->delete();
-        return $result ? $this->retornarOk() : $this->retornarErro();
-    }
-
-    private function retornarOk()
-    {
-        return array("mensagem" => "OK");
-    }
-
-    private function retornarErro()
-    {
-        return array("mensagem" => "Erro");
+        return $result ? Funcoes::retornarOk() : Funcoes::retornarErro();
     }
 }
