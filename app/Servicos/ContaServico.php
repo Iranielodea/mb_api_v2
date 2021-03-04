@@ -22,12 +22,40 @@ class ContaServico
         $this->repositorioContaBanco = $repositorioContaBanco;
     }
 
-    public function salvar(Request $request)
+    public function incluir(Request $request)
     {
-        $retorno = "";
         $lista = $request->all();
         try
         {
+            $resultado = '';
+            foreach($lista as $item)
+            {
+                $contaBanco = $this->repositorioContaBanco->obterPorCodigo($item['contaBancoId']);
+
+                $model = new Conta($item['id'], $item['codigo'], $item['numPedido'], $item['nomeCliente'], 
+                    $item['nomeFornecedor'], $item['dataEmissao'], $item['valorPagar'], $item['dataVencto'], 
+                    $item['dias'], $item['dataPago'], $item['valorPago'], $item['seqConta'], $item['valorOriginal'], 
+                    $item['tipoConta'], $item['situacao'], $item['documento'], $item['nomeFormaPagto'], 
+                    $contaBanco->codigo, $item['pedidoId']);
+
+                $resultado = $this->repositorio->incluir($model);
+            }
+
+            return response()->json($resultado, Response::HTTP_OK);
+        }
+        catch(Exception $ex)
+        {
+            $retorno = Funcoes::retornarErro(). $ex->getMessage();
+            return response()->json($retorno, Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    public function salvar(Request $request)
+    {
+        $lista = $request->all();
+        try
+        {
+            $resultado = '';
             foreach($lista as $item)
             {
                 $contaBanco = $this->repositorioContaBanco->obterPorCodigo($item['contaBancoId']);

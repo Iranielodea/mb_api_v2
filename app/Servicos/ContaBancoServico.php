@@ -20,9 +20,8 @@ class ContaBancoServico
 
     public function salvar(Request $request)
     {    
-        $retorno = "";
         $lista = $request->all();
-        
+        $resultado = '';
         try
         {
             foreach($lista as &$item)

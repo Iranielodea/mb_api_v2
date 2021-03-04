@@ -22,6 +22,7 @@ class UsuarioServico
     {
         try
         {
+            $resultado = "";
             $lista = $request->all();
             foreach($lista as $item)
             {   

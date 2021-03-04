@@ -20,7 +20,6 @@ class PedidoItemServico
 
     public function salvar(Request $request)
     {    
-        $retorno = "";
         try
         {
             $lista = $request->all();

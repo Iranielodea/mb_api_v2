@@ -20,7 +20,7 @@ class GrupoServico
 
     public function salvar(Request $request)
     {
-        $retorno = "";
+        $retorno = '';
         $lista = $request->all();
         try
         {

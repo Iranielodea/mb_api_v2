@@ -13,4 +13,5 @@ interface CargaRepositorioInterface
     public function obterPorNumCarga(int $numCarga);
     public function salvar(Carga $carga);
     public function excluir(int $id);
+    public function incluir(Carga $carga);
 }

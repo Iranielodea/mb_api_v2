@@ -20,10 +20,10 @@ class ClienteServico
 
     public function salvar(Request $request)
     {    
-        $retorno = "";
         $lista = $request->all();
         try
         {
+            $resultado = '';
             foreach($lista as $item)
             {
                 if (empty($item['nome']))

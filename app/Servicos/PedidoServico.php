@@ -20,7 +20,6 @@ class PedidoServico
 
     public function salvar(Request $request)
     {    
-        $retorno = "";
         try
         {
             $resultado = "";

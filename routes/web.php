@@ -68,6 +68,7 @@ $router->group(['prefix' => 'pedidoItem'], function () use($router){
 
 $router->group(['prefix' => 'carga'], function () use($router){
     $router->get('/', 'cargaController@listar');
+    $router->post('/incluir', 'cargaController@incluir');
     $router->post('/', 'cargaController@inserir');
     $router->get('/{id}', 'cargaController@obterPorId');
     $router->put('/', 'cargaController@atualizar');
@@ -77,6 +78,7 @@ $router->group(['prefix' => 'carga'], function () use($router){
 $router->group(['prefix' => 'conta'], function () use($router){
     $router->get('/', 'contaController@listar');
     $router->post('/', 'contaController@inserir');
+    $router->post('/incluir', 'contaController@incluir');
     $router->get('/{id}', 'contaController@obterPorId');
     $router->put('/', 'contaController@atualizar');
     $router->delete('/{id}', 'contaController@excluir');

@@ -21,7 +21,6 @@ class TransportadoraServico
 
     public function salvar(Request $request)
     {   
-        $retorno = ""; 
         try
         {
             $resultado = '';

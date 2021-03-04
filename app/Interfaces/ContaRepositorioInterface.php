@@ -13,4 +13,5 @@ interface ContaRepositorioInterface
     public function obterPorId(int $id);
     public function salvar(Conta $conta);
     public function excluir(int $id);
+    public function incluir(Conta $conta);
 }

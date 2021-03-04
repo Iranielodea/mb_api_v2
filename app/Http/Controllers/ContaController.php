@@ -55,6 +55,11 @@ class ContaController extends Controller
         return $this->servico->salvar($request);
     }
 
+    public function incluir(Request $request)
+    {
+        return $this->servico->incluir($request);
+    }
+
     public function atualizar(Request $request)
     {
         return $this->servico->salvar($request);

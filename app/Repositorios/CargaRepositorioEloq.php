@@ -28,6 +28,13 @@ class CargaRepositorioEloq implements CargaRepositorioInterface
     {
         return $this->model->where('num_carga', '=', $numCarga)->first();
     }
+
+    public function incluir(Carga $carga)
+    {
+        $model = new CargaModel();
+        return $this->persistirDados($carga, $model);
+    }
+
     public function salvar(Carga $carga)
     {
         $codigo = $carga->getCodigo();
@@ -36,6 +43,11 @@ class CargaRepositorioEloq implements CargaRepositorioInterface
         if ($model == null)
             $model = new CargaModel();
 
+        return $this->persistirDados($carga, $model);
+    }
+
+    private function persistirDados(Carga $carga, CargaModel $model)
+    {
         $model->codigo = $carga->getCodigo();
         $model->nome_cliente = $carga->getNomeCliente();
         $model->nome_contato = $carga->getNomeContato();

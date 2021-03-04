@@ -6,7 +6,6 @@ use App\Entidades\Conta;
 use App\interfaces\ContaRepositorioInterface;
 use App\Models\ContaModel;
 use App\Shared\Funcoes;
-use Illuminate\Support\Facades\DB;
 
 class ContaRepositorioEloq implements ContaRepositorioInterface
 {
@@ -32,6 +31,12 @@ class ContaRepositorioEloq implements ContaRepositorioInterface
         return $this->model->where('codigo', '=', $codigo)->first();
     }
 
+    public function incluir(Conta $conta)
+    {
+        $model = new ContaModel();
+        return $this->persistirDados($conta, $model);
+    }
+
     public function salvar(Conta $conta)
     {
         $codigo = $conta->getCodigo();
@@ -40,6 +45,11 @@ class ContaRepositorioEloq implements ContaRepositorioInterface
         if ($model == null)
             $model = new ContaModel();
         
+        return $this->persistirDados($conta, $model);
+    }
+
+    private function persistirDados(Conta $conta, ContaModel $model)
+    {
         $model->codigo = $conta->getCodigo();
         $model->num_pedido = $conta->getNumPedido();
         $model->nome_cliente = $conta->getNomeCliente();
