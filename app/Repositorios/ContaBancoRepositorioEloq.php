@@ -6,7 +6,7 @@ use App\Entidades\ContaBanco;
 use App\interfaces\ContaBancoRepositorioInterface;
 use App\Models\ContaBancoModel;
 use App\Shared\Funcoes;
-use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\DB;
 
 class ContaBancoRepositorioEloq implements ContaBancoRepositorioInterface
 {

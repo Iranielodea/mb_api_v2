@@ -5,6 +5,7 @@ namespace App\Entidades;
 class Grupo extends EntidadeBase
 {
     private $ativo;
+    public $preco;
 
     public function __construct($id, $codigo, $nome, $ativo)
     {

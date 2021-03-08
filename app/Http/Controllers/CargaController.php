@@ -51,7 +51,7 @@ class CargaController extends Controller
     }
 
     public function incluir(Request $request )
-    {
+    {        
         return $this->servico->incluir($request);
     }
 

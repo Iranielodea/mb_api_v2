@@ -8,6 +8,7 @@ use App\interfaces\ContaRepositorioInterface;
 use App\Shared\Funcoes;
 use Exception;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\HttpFoundation\Response;
 
 class ContaServico
@@ -24,33 +25,15 @@ class ContaServico
 
     public function incluir(Request $request)
     {
-        $lista = $request->all();
-        try
-        {
-            $resultado = '';
-            foreach($lista as $item)
-            {
-                $contaBanco = $this->repositorioContaBanco->obterPorCodigo($item['contaBancoId']);
-
-                $model = new Conta($item['id'], $item['codigo'], $item['numPedido'], $item['nomeCliente'], 
-                    $item['nomeFornecedor'], $item['dataEmissao'], $item['valorPagar'], $item['dataVencto'], 
-                    $item['dias'], $item['dataPago'], $item['valorPago'], $item['seqConta'], $item['valorOriginal'], 
-                    $item['tipoConta'], $item['situacao'], $item['documento'], $item['nomeFormaPagto'], 
-                    $contaBanco->codigo, $item['pedidoId']);
-
-                $resultado = $this->repositorio->incluir($model);
-            }
-
-            return response()->json($resultado, Response::HTTP_OK);
-        }
-        catch(Exception $ex)
-        {
-            $retorno = Funcoes::retornarErro(). $ex->getMessage();
-            return response()->json($retorno, Response::HTTP_BAD_REQUEST);
-        }
+        return $this->salvarGeral($request, true);
     }
 
     public function salvar(Request $request)
+    {
+        return $this->salvarGeral($request, false);
+    }
+
+    private function salvarGeral(Request $request, bool $incluir)
     {
         $lista = $request->all();
         try
@@ -58,15 +41,24 @@ class ContaServico
             $resultado = '';
             foreach($lista as $item)
             {
-                $contaBanco = $this->repositorioContaBanco->obterPorCodigo($item['contaBancoId']);
+                $codigoContaBanco = null;
+                if (!empty($item['contaBancoId']))
+                {
+                    $contaBanco = $this->repositorioContaBanco->obterPorCodigo($item['contaBancoId']);
+                    if ($contaBanco != null)
+                        $codigoContaBanco = $contaBanco->codigo;
+                }     
 
                 $model = new Conta($item['id'], $item['codigo'], $item['numPedido'], $item['nomeCliente'], 
                     $item['nomeFornecedor'], $item['dataEmissao'], $item['valorPagar'], $item['dataVencto'], 
                     $item['dias'], $item['dataPago'], $item['valorPago'], $item['seqConta'], $item['valorOriginal'], 
                     $item['tipoConta'], $item['situacao'], $item['documento'], $item['nomeFormaPagto'], 
-                    $contaBanco->codigo, $item['pedidoId']);
+                    $codigoContaBanco, $item['pedidoId']);
 
-                $resultado = $this->repositorio->salvar($model);
+                if ($incluir)
+                    $resultado = $this->repositorio->incluir($model);
+                else
+                    $resultado = $this->repositorio->salvar($model);
             }
 
             return response()->json($resultado, Response::HTTP_OK);

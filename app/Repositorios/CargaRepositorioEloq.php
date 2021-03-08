@@ -6,7 +6,7 @@ use App\Entidades\Carga;
 use App\interfaces\CargaRepositorioInterface;
 use App\Models\CargaModel;
 use App\Shared\Funcoes;
-use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\DB;
 
 class CargaRepositorioEloq implements CargaRepositorioInterface
 {

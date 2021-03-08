@@ -26,7 +26,7 @@ class CargaServico
         {
             $resultado = '';
             foreach($lista as $item)
-            {
+            {                
                 $model = new Carga($item['id'], $item['codigo'], $item['nomeCliente'], $item['nomeContato'], 
                     $item['numPedido'], $item['numCarga'], $item['letra'], $item['data'], $item['visto'], 
                     $item['qtde'], $item['valorPedido'], $item['valorCarrega'], $item['valorFrete'], 
@@ -37,7 +37,7 @@ class CargaServico
                     $item['nomeManifesto'], $item['qtdeCada'], $item['siglaUnidade'], $item['agenciaBanco'], 
                     $item['cnpjCpf'], $item['creditoNf'], $item['numNota2'], $item['ir'], $item['valorNota2'], 
                     $item['nomeUsina'], $item['nomeAgencia']);
-                    
+
                 $resultado = $this->repositorio->incluir($model);
             }
             return response()->json($resultado, Response::HTTP_OK);
