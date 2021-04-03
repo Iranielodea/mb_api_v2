@@ -55,7 +55,7 @@ class CargaController extends Controller
         return $this->servico->incluir($request);
     }
 
-    public function inserir(Request $request)
+    public function inserirAlterar(Request $request)
     {        
         return $this->servico->salvar($request);
     }

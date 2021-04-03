@@ -23,10 +23,12 @@ class Conta
     private $nomeFormaPagto;
     private $contaBancoId;
     private $pedidoId;
+    private $codCliente;
+    private $codFor;
 
     public function __construct($id, $codigo, $numPedido, $nomeCliente, $nomeFornecedor, $dataEmissao,
         $valorPagar, $dataVencto, $dias, $dataPago, $valorPago, $seqConta, $valorOriginal, $tipoConta,
-        $situacao, $documento, $nomeFormaPagto, $contaBancoId, $pedidoId)
+        $situacao, $documento, $nomeFormaPagto, $contaBancoId, $pedidoId, $codCliente, $codFor)
     {
         $this->setId($id);
         $this->setCodigo($codigo);
@@ -47,6 +49,8 @@ class Conta
         $this->setNomeFormaPagto($nomeFormaPagto);
         $this->setContaBancoId($contaBancoId);
         $this->setPedidoId($pedidoId);
+        $this->setCodCliente($codCliente);
+        $this->setCodFor($codFor);
     }
 
     public function getId()
@@ -237,5 +241,25 @@ class Conta
     public function setPedidoId($value)
     {
         $this->pedidoId = $value;
+    }
+
+    public function getCodCliente()
+    {
+        return $this->codCliente;
+    }
+
+    public function setCodCliente($codCliente)
+    {
+        $this->codCliente = $codCliente;
+    }
+
+    public function getCodFor()
+    {
+        return $this->codFor;
+    }
+
+    public function setCodFor($codFor)
+    {
+        $this->codFor = $codFor;
     }
 }

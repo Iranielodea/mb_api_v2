@@ -87,6 +87,14 @@ class CargaRepositorioEloq implements CargaRepositorioInterface
         $model->valor_nota2 = $carga->getValorNota2();
         $model->nome_usina = $carga->getNomeUsina();
         $model->nome_agencia = $carga->getNomeAgencia();
+        $model->cod_cliente = $carga->getCodCliente();
+        $model->cod_for = $carga->getCodFor();
+        $model->cod_contato = $carga->getCodContato();
+        $model->cod_motorista = $carga->getCodMotorista();
+        $model->cod_manifesto = $carga->getCodManifesto();
+        $model->id_unidade = $carga->getIdUnidade();
+        $model->id_conta_banco = $carga->getIdContaBanco();
+        $model->cod_usina = $carga->getCodUsina();
         
         $model->save();
         return Funcoes::retornarOk();

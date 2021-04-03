@@ -50,7 +50,7 @@ class ContaController extends Controller
         }
     }
 
-    public function inserir(Request $request)
+    public function inserirAlterar(Request $request)
     {
         return $this->servico->salvar($request);
     }

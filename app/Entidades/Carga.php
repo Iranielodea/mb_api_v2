@@ -44,12 +44,21 @@ class Carga
     private $ir;
     private $ValorNota2;
     private $nomeUsina;
+    private $codCliente;
+    private $codFor;
+    private $codContato;
+    private $codMotorista;
+    private $codManifesto;
+    private $idUnidade;
+    private $idContaBanco;
+    private $codUsina;
 
     public function __construct($id, $codigo, $nomeCliente, $nomeContato, $numPedido, $numCarga, $letra,
         $data, $visto, $qtde, $valorPedido, $valorCarrega, $valorFrete, $nomeFornecedor, $nomeMotorista,
         $qtdePedido, $placa, $obs, $situacao, $financeiro, $complemento, $contatoIndicacao, $saldo,
         $armazen, $unidade, $complUnidade, $obs2, $numNf, $dataNf, $nomeManifesto, $qtdeCada,
-        $siglaUnidade, $agenciaBanco, $cnpjCpf, $creditoNf, $numNota2, $ir, $valorNota2, $nomeUsina, $nomeAgencia)
+        $siglaUnidade, $agenciaBanco, $cnpjCpf, $creditoNf, $numNota2, $ir, $valorNota2, $nomeUsina, $nomeAgencia,
+        $codCliente, $codFor, $codContato, $codMotorista, $codManifesto, $idUnidade, $idContaBanco, $codUsina)
     {
         $this->setId($id);
         $this->setCodigo($codigo);
@@ -91,6 +100,14 @@ class Carga
         $this->setValorNota2($valorNota2);
         $this->setNomeUsina($nomeUsina);
         $this->setNomeAgencia($nomeAgencia);
+        $this->setCodCliente($codCliente);
+        $this->setCodFor($codFor);
+        $this->setCodContato($codContato);
+        $this->setCodMotorista($codMotorista);
+        $this->setCodManifesto($codManifesto);
+        $this->setIdUnidade($idUnidade);
+        $this->setIdContaBanco($idContaBanco);
+        $this->setCodUsina($codUsina);
     }
 
     public function getId()
@@ -491,5 +508,85 @@ class Carga
     public function setNomeAgencia($value)
     {
         $this->nomeAgencia = $value;
+    }
+
+    public function getCodCliente()
+    {
+        return $this->codCliente;
+    }
+
+    public function setCodCliente($codCliente)
+    {
+        $this->codCliente = $codCliente;
+    }
+
+    public function getCodFor()
+    {
+        return $this->codFor;
+    }
+
+    public function setCodFor($codFor)
+    {
+        $this->codFor = $codFor;
+    }
+
+    public function getCodContato()
+    {
+        return $this->codContato;
+    }
+
+    public function setCodContato($codContato)
+    {
+        $this->codContato = $codContato;
+    }
+
+    public function getCodMotorista()
+    {
+        return $this->codMotorista;
+    }
+
+    public function setCodMotorista($codMotorista)
+    {
+        $this->codMotorista = $codMotorista;
+    }
+
+    public function getCodManifesto()
+    {
+        return $this->codManifesto;
+    }
+
+    public function setCodManifesto($codManifesto)
+    {
+        $this->codManifesto = $codManifesto;
+    }
+
+    public function getIdUnidade()
+    {
+        return $this->idUnidade;
+    }
+
+    public function setIdUnidade($idUnidade)
+    {
+        $this->idUnidade = $idUnidade;
+    }
+
+    public function getIdContaBanco()
+    {
+        return $this->idContaBanco;
+    }
+
+    public function setIdContaBanco($idContaBanco)
+    {
+        $this->idContaBanco = $idContaBanco;
+    }
+
+    public function getCodUsina()
+    {
+        return $this->codUsina;
+    }
+
+    public function setCodUsina($codUsina)
+    {
+        $this->codUsina = $codUsina;
     }
 }

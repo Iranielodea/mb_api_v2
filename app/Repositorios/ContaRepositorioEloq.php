@@ -6,7 +6,7 @@ use App\Entidades\Conta;
 use App\interfaces\ContaRepositorioInterface;
 use App\Models\ContaModel;
 use App\Shared\Funcoes;
-use Illuminate\Support\Facades\DB;
+// use Illuminate\Support\Facades\DB;
 
 class ContaRepositorioEloq implements ContaRepositorioInterface
 {
@@ -69,6 +69,8 @@ class ContaRepositorioEloq implements ContaRepositorioInterface
         $model->nome_forma_pagto = $conta->getNomeFormaPagto();
         $model->conta_banco_id = $conta->getContaBancoId();
         $model->pedido_id = $conta->getPedidoId();        
+        $model->cod_cliente = $conta->getCodCliente();
+        $model->cod_for = $conta->getCodFor();
         
         $model->save();
         return Funcoes::retornarOk();
