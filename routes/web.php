@@ -92,3 +92,11 @@ $router->group(['prefix' => 'contaBanco'], function () use($router){
     $router->delete('/{id}', 'contaBancoController@excluir');
 });
 
+$router->group(['prefix' => 'fornecedor'], function () use($router){
+    $router->get('/', 'fornecedorController@listar');
+    $router->post('/', 'fornecedorController@inserirAlterar');
+    $router->post('/incluir', 'fornecedorController@incluir');
+    $router->get('/{id}', 'fornecedorController@obterPorId');
+    $router->put('/', 'fornecedorController@atualizar');
+    $router->delete('/{id}', 'fornecedorController@excluir');
+});

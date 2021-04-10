@@ -40,6 +40,17 @@ class FornecedorRepositorioEloq implements FornecedorRepositorioInterface
         if ($model == null)
             $model = new FornecedorModel();
 
+        return $this->persistir($fornecedor, $model);
+    }
+
+    public function incluir(Fornecedor $fornecedor)
+    {        
+        $model = new FornecedorModel();
+        return $this->persistir($fornecedor, $model);      
+    }
+
+    private function persistir(Fornecedor $fornecedor, FornecedorModel $model)
+    {        
         $model->codigo = $fornecedor->getCodigo();
         $model->nome = $fornecedor->getNome();
         $model->bairro = $fornecedor->getBairro();

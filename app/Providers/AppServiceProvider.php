@@ -7,6 +7,7 @@ use App\interfaces\GrupoRepositorioInterface;
 use App\interfaces\ClienteRepositorioInterface;
 use App\interfaces\ContaBancoRepositorioInterface;
 use App\interfaces\ContaRepositorioInterface;
+use App\interfaces\FornecedorRepositorioInterface;
 use App\interfaces\PedidoItemRepositorioInterface;
 use App\interfaces\PedidoRepositorioInterface;
 use App\interfaces\TransportadoraRepositorioInterface;
@@ -15,6 +16,7 @@ use App\repositorios\CargaRepositorioEloq;
 use App\Repositorios\ClienteRepositorioEloq;
 use App\repositorios\ContaBancoRepositorioEloq;
 use App\repositorios\ContaRepositorioEloq;
+use App\Repositorios\FornecedorRepositorioEloq;
 use App\repositorios\GrupoRepositorioEloq;
 use App\Repositorios\PedidoItemRepositorioEloq;
 use App\Repositorios\PedidoRepositorioEloq;
@@ -40,5 +42,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CargaRepositorioInterface::class, CargaRepositorioEloq::class);
         $this->app->bind(ContaRepositorioInterface::class, ContaRepositorioEloq::class);
         $this->app->bind(ContaBancoRepositorioInterface::class, ContaBancoRepositorioEloq::class);
+        $this->app->bind(FornecedorRepositorioInterface::class, FornecedorRepositorioEloq::class);
     }
 }
