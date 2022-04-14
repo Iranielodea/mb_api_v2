@@ -34,6 +34,7 @@ class ContaRepositorioEloq implements ContaRepositorioInterface
 
     public function incluir(Conta $conta)
     {        
+        var_dump($conta);
         $model = new ContaModel();
         return $this->persistirDados($conta, $model);
     }
@@ -41,7 +42,11 @@ class ContaRepositorioEloq implements ContaRepositorioInterface
     public function salvar(Conta $conta)
     {
         $codigo = $conta->getCodigo();
+        //$model = $this->model->where('codigo', '=', $codigo)->first();
         $model = $this->obterPorCodigo($codigo);
+
+        // var_dump($conta);
+        // die;
 
         if ($model == null)
             $model = new ContaModel();

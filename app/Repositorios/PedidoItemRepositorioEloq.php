@@ -27,7 +27,7 @@ class PedidoItemRepositorioEloq implements PedidoItemRepositorioInterface
         return $this->model->find($id);
     }
 
-    public function obterPorItem(int $numeroPedido, int $codProduto, int $seq)
+    public function obterPorItem($numeroPedido, $codProduto, $seq)
     {
         return $this->model->where('num_pedido', '=', $numeroPedido)
             ->where('cod_produto', '=', $codProduto)
@@ -40,7 +40,11 @@ class PedidoItemRepositorioEloq implements PedidoItemRepositorioInterface
         $codProduto = $pedidoItem->getCodProduto();
         $seq = $pedidoItem->getSeq();
         
-        $model = $this->model->obterPorItem($numPedido, $codProduto, $seq);
+        // $model = $this->model->obterPorItem($numPedido, $codProduto, $seq);
+
+        $model = $this->model->where('num_pedido', '=', $numPedido)
+        ->where('cod_produto', '=', $codProduto)
+        ->where('seq', '=', $seq)->first();
 
         if ($model == null)
             $model = new PedidoItemModel();

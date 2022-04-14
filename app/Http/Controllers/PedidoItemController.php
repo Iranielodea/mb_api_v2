@@ -65,7 +65,7 @@ class PedidoItemController extends Controller
     }
 
     public function inserir(Request $request)
-    {
+    {        
         return $this->servico->salvar($request);
     }
 

@@ -34,7 +34,8 @@ class ContaServico
 
     private function salvarGeral(Request $request, bool $incluir)
     {
-        $lista = $request->all();
+        $lista = $request->all();        
+
         try
         {
             $resultado = '';

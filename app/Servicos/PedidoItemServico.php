@@ -31,7 +31,7 @@ class PedidoItemServico
                     $item['nomeProduto'], $item['seq'], $item['qtde'], $item['valor'],
                     $item['valorTotal'], $item['siglaUn'], $item['precoVenda'], $item['valorLucro'], 
                     $item['totalLucro'], $item['totalVenda']);
-                    
+                                        
                 $resultado = $this->repositorio->salvar($model);
             }
             return response()->json($resultado, Response::HTTP_OK);
